@@ -1,23 +1,43 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cssStyle from './styles.css';
+import styled from "styled-components";
+
+const Filler = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: red;
+	color: white;
+	clip-path: polygon(0 0, -65% 0, 0% 100%, 0% 100%);
+	transition: clip-path 0.5s;
+`;
+
+const Button = styled.button`
+	border: 2px solid red;
+	background: white;
+	padding: 10px;
+	text-transform: uppercase;
+	font-weight: bold;
+	letter-spacing: 0.2em;
+	position: relative;
+	max-width: 100px;
+
+	&:hover ${Filler} {
+		clip-path: polygon(0 0, 100% 0, 165% 100%, 0% 100%);
+	}
+`;
 
 const HoverFillButton = ({ children, className, style, ...props }) => {
-	style = style ? style : {};
-	const buttonStyle = {
-		color: props.textColor,
-		background: props.background,
-		borderColor: props.fillBackground,
-		...style
-	};
 	return (
-		<button className={`${cssStyle.button} ${className ? className : ""}`} style={buttonStyle} {...props}>
-			<div className={`${cssStyle.filler} hover-fill-button-filter`} style={{
-				color: props.fillTextColor,
-				background: props.fillBackground,
-			}}>{children}</div>
+		<Button {...props}>
+			<Filler >{children}</Filler>
 			{children}
-		</button>
+		</Button>
 	)
 };
 
